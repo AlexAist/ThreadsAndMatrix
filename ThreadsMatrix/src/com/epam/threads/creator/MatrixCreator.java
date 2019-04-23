@@ -14,9 +14,9 @@ public class MatrixCreator {
         this.matrix = matrix;
     }
 
-    public int[][] randomArray(int size){
-        int DIAGONAL_NUM = 0;
-        int RANDOM_MAX = 91;
+    public int[][] randomMatrix(int size){
+        final int DIAGONAL_NUM = 0;
+        final int RANDOM_MAX = 91;
         int[][] matrix = new int[size][size];
         Random random = new Random();
         for (int i = 0; i < matrix.length; i++) {

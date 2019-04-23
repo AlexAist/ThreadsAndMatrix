@@ -1,4 +1,6 @@
 .idea/
 out/
 libs/
+logs/
+logFiles/
 *.iml

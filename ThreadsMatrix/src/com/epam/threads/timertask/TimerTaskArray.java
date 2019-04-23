@@ -16,20 +16,20 @@ public class TimerTaskArray extends TimerTask {
     }
 
     private void completeTask(){
-        int[][] array;
+        int[][] matrix;
         DataStorage storage = DataStorage.INSTANCE;
         Reporter reporter = new Reporter();
         MatrixCreator matrixCreator = new MatrixCreator();
-            array = matrixCreator.randomArray(10);
-            ThreadTask threadTask = new ThreadTask(array);
+            matrix = matrixCreator.randomMatrix(10);
+            ThreadTask threadTask = new ThreadTask(matrix, 10);
             threadTask.calcLeftRight();
             try {
                 TimeUnit.MILLISECONDS.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            array = threadTask.getArray();
-            reporter.printArray(array);
+            matrix = threadTask.getMatrix();
+            reporter.printArray(matrix);
             reporter.printMes(storage.getMap().toString());
     }
 }

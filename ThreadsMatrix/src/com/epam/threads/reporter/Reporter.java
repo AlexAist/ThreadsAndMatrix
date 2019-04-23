@@ -2,8 +2,8 @@ package com.epam.threads.reporter;
 
 public class Reporter {
 
-    public void printArray(int[][] ar){
-        for (int[] ints : ar) {
+    public void printArray(int[][] matrix){
+        for (int[] ints : matrix) {
             for (int anInt : ints) {
                 System.out.print(anInt + "\t");
             }

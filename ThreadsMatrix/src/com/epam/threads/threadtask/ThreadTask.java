@@ -3,6 +3,7 @@ package com.epam.threads.threadtask;
 import com.epam.threads.action.MatrixLogic;
 import com.epam.threads.storage.DataStorage;
 
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -11,26 +12,27 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class ThreadTask {
 
-    private ExecutorService executor;
     private ReadWriteLock lock;
     private MatrixLogic matrixLogic;
-    private int[][] array;
+    private int[][] matrix;
     private DataStorage storage = DataStorage.INSTANCE;
-    private final int THREAD_NUM = 10;
+    private int THREAD_NUM;
 
-    public ThreadTask(int[][] array) {
-        executor = Executors.newFixedThreadPool(THREAD_NUM);
+    public ThreadTask(int[][] matrix, int threadNum) {
         lock = new ReentrantReadWriteLock();
         matrixLogic = new MatrixLogic();
-        this.array = array;
+        this.matrix = matrix;
+        this.THREAD_NUM = threadNum;
     }
 
-    public int[][] getArray() {
-        return array;
+    public int[][] getMatrix() {
+        return matrix;
     }
 
 
     public void calcLeftRight() {
+        ExecutorService executor = Executors.newFixedThreadPool(THREAD_NUM);
+        Random random = new Random();
         for (int i = 0; i < THREAD_NUM; i++) {
             int counter = i;
             executor.submit(() -> {
@@ -39,8 +41,8 @@ public class ThreadTask {
                     Thread.currentThread().setName(id);
                     int currentId = Integer.parseInt(Thread.currentThread().getName());
                     lock.writeLock().lock();
-                    matrixLogic.addThreadNumber(array, counter, currentId);
-                    TimeUnit.MILLISECONDS.sleep(7);
+                    matrixLogic.addThreadNumberToMatrix(matrix, counter, currentId);
+                    TimeUnit.MILLISECONDS.sleep(random.nextInt(9));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
@@ -49,7 +51,7 @@ public class ThreadTask {
                 try{
                     int currentId = Integer.parseInt(Thread.currentThread().getName());
                     lock.readLock().lock();
-                    int result = matrixLogic.calcSum(array[counter], counter);
+                    int result = matrixLogic.strSum(matrix[counter], counter);
                     storage.add(currentId, result);
                 }finally {
                     lock.readLock().unlock();

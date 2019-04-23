@@ -4,13 +4,13 @@ import com.epam.threads.creator.MatrixCreator;
 
 public class MatrixLogic {
 
-    public void addThreadNumber(int[][] ar, int number, int value){
+    public void addThreadNumberToMatrix(int[][] matrix, int number, int value){
         MatrixCreator creator = new MatrixCreator();
-        ar[number][number] = value;
-        creator.setMatrix(ar);
+        matrix[number][number] = value;
+        creator.setMatrix(matrix);
     }
 
-    public int calcSum(int[] array, int position){
+    public int strSum(int[] array, int position){
         int sum = 0;
         int avg = 1;
         int result;
@@ -26,5 +26,4 @@ public class MatrixLogic {
         result = avg + sum;
         return result;
     }
-
 }
